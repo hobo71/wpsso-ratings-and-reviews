@@ -116,10 +116,13 @@ if ( ! class_exists( 'WpssoRarRegister' ) ) {
 
 		private static function uninstall_plugin() {
 
-			$opts = get_option( WPSSO_OPTIONS_NAME, array() );
+			if ( defined( 'WPSSO_OPTIONS_NAME' ) ) {	// Just in case.
+				$opts = get_option( WPSSO_OPTIONS_NAME, array() );
+			} else {
+				$opts = array();
+			}
 
-			if ( ! empty( $opts['plugin_clean_on_uninstall'] ) ) {
-
+			if ( ! empty( $opts[ 'plugin_clean_on_uninstall' ] ) ) {
 				delete_post_meta_by_key( WPSSORAR_META_ALLOW_RATINGS );
 			}
 
